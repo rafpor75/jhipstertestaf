@@ -1,0 +1,62 @@
+
+<div *ngIf="facolta">
+    <h2><span jhiTranslate="safApp.facolta.detail.title">Facolta</span> {{facolta.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="safApp.facolta.nome">Nome</span></dt>
+        <dd>
+            <span>{{facolta.nome}}</span>
+        </dd>
+        <dt><span jhiTranslate="safApp.facolta.dataModifica">Data Modifica</span></dt>
+        <dd>
+            <span>{{facolta.dataModifica | date:'mediumDate'}}</span>
+        </dd>
+        <dt><span jhiTranslate="safApp.facolta.abilitato">Abilitato</span></dt>
+        <dd>
+            <span>{{facolta.abilitato}}</span>
+        </dd>
+        {{facolta.relFacCdls[0].id}}
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'facolta/'+ facolta.id + '/edit'} }]"
+            replaceUrl="true"
+            queryParamsHandling="merge"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>
+<div class="row">
+    </div>
+    <br/>
+    <div class="table-responsive" *ngIf="facolta && facolta.relFacCdls  && facolta.relFacCdls.length">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+            <th><span jhiTranslate="global.field.id">ID</span> <span class="fa fa-sort"></span></th>
+            <th><span jhiTranslate="safApp.cdl.codice">Codice</span> <span class="fa fa-sort"></span></th>
+            <th><span jhiTranslate="safApp.cdl.nome">Nome</span> <span class="fa fa-sort"></span></th>
+            <th><span jhiTranslate="safApp.cdl.abilitato">Abilitato</span> <span class="fa fa-sort"></span></th>
+           
+            <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let cdl of facolta.relFacCdls;trackBy: trackId">
+                <td><a [routerLink]="['../cdl', cdl.id ]">{{cdl.id}}</a></td>
+                <td>{{cdl.codice}}</td>
+                <td>{{cdl.nome}}</td>
+                <td>{{cdl.abilitato}}</td>
+                
+                   
+            </tr>
+            </tbody>
+        </table>
+    </div>
